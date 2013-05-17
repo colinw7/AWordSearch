@@ -67,7 +67,7 @@ public class WordSearchView extends View {
     addWord(new String("APOSTROPHE"));
 
     restartButton = new Button("Restart");
-    
+
     generate();
   }
 
@@ -89,11 +89,11 @@ public class WordSearchView extends View {
     height_ = h;
 
     s_ = Math.min(width_, height_);
-    
+
     restartButton.move(s_ + 40, height_ - 20);
-    
+
     restartButton.setFontSize(s_/25.0f);
-    
+
     super.onSizeChanged(w, h, oldw, oldh);
   }
 
@@ -111,7 +111,7 @@ public class WordSearchView extends View {
     Paint select_paint = new Paint();
     select_paint.setColor(select_color);
     select_paint.setStyle(Paint.Style.FILL);
-    
+
     Paint found_paint = new Paint();
     found_paint.setColor(found_color);
     found_paint.setStyle(Paint.Style.FILL);
@@ -136,21 +136,11 @@ public class WordSearchView extends View {
     s_ = Math.min(width_, height_);
     b_ = 8;
 
-    //int font_size = dx_/2;
-
-    //QFont font("helvetica", font_size);
-
-    //setFont(font);
-
-    //QFontMetrics fm(font);
-
-    //int fh = fm.height();
-
     int s = grid_.getSize();
 
     dx_ = (s_ - 2*b_)/s;
     dy_ = (s_ - 2*b_)/s;
-    
+
     red_paint  .setTextSize(dx_*0.65f);
     black_paint.setTextSize(dx_*0.65f);
     gray_paint .setTextSize(dx_*0.65f);
@@ -213,10 +203,10 @@ public class WordSearchView extends View {
         float fw = black_paint.measureText(text);
 
         canvas.drawText(text, (x1 + x2)/2 - fw/2, (y1 + y2)/2 - fh/2, red_paint);
-  
+
         xy_used.add(y*s + x);
       }
-      
+
       outlineWord(canvas, start, end, black_paint, found_paint);
     }
 
@@ -247,7 +237,7 @@ public class WordSearchView extends View {
 
     // draw words
     int dy1 = (s_ - 2*b_ - dy_)/num_words;
-    
+
     black_paint.setTextSize(dy1*0.65f);
     gray_paint .setTextSize(dy1*0.65f);
 
@@ -270,9 +260,9 @@ public class WordSearchView extends View {
       else
         canvas.drawText(word.getWord(), xx, yy1 - fa1, gray_paint);
     }
-    
+
     //----
-    
+
     restartButton.draw(canvas);
   }
 
@@ -297,22 +287,22 @@ public class WordSearchView extends View {
 
     int xm1 = (x11 + x21)/2;
     int ym1 = (y11 + y21)/2;
-    
+
     int xm2 = (x12 + x22)/2;
     int ym2 = (y12 + y22)/2;
-    
+
     float xa11 = (float) (xm1 - (dx_/2)*Math.sin(a));
     float ya11 = (float) (ym1 + (dx_/2)*Math.cos(a));
     float xa21 = (float) (xm1 + (dx_/2)*Math.sin(a));
     float ya21 = (float) (ym1 - (dx_/2)*Math.cos(a));
-    
+
     //float xa12 = (float) (xm2 - (dx_/2)*Math.sin(a));
     //float ya12 = (float) (ym2 + (dx_/2)*Math.cos(a));
     float xa22 = (float) (xm2 + (dx_/2)*Math.sin(a));
     float ya22 = (float) (ym2 - (dx_/2)*Math.cos(a));
-    
+
     path.moveTo(xa21, ya21);
-    
+
     path.addArc(new RectF(x11, y11, x21, y21), (float) (d + 90), 180.0f);
 
     //QPointF p2 = path.currentPosition();
@@ -340,7 +330,7 @@ public class WordSearchView extends View {
   public boolean onTouchEvent(MotionEvent event) {
 	int mouseX = (int) event.getX();
     int mouseY = (int) event.getY();
-      
+
     if (event.getAction() == MotionEvent.ACTION_DOWN) {
       if (restartButton.contains(mouseX, mouseY)) {
         restartButton.setPressed(true);
@@ -370,7 +360,7 @@ public class WordSearchView extends View {
         invalidate();
         return true;
       }
-      
+
       pressed_ = false;
 
       end_ = mapPoint(mouseX, mouseY);
@@ -389,7 +379,7 @@ public class WordSearchView extends View {
   @Override
   public boolean onKeyDown(int keyCode, KeyEvent event) {
     generate();
-    
+
     invalidate();
 
     return true;
@@ -403,10 +393,10 @@ public class WordSearchView extends View {
     int y3 = (Math.abs(y - (b_ + dy_*y1 + dy_/2)) < Math.abs(y - (b_ + dy_*y2 + dy_/2)) ? y1 : y2);
 
     int s = grid_.getSize();
-    
+
     if (x3 < 0) x3 = 0; if (x3 >= s) x3 = s - 1;
     if (y3 < 0) y3 = 0; if (y3 >= s) y3 = s - 1;
-    
+
     return new Pos(x3, y3);
   }
 }

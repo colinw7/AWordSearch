@@ -4,7 +4,7 @@ public class Pos {
   public int x, y;
 
   Pos() {
-	x = 0; y = 0;
+    x = 0; y = 0;
   }
   
   Pos(int x1, int y1) {
